@@ -1,0 +1,34 @@
+StockTrade RUN 1
+
+19/09/25 13:04:32 INFO DAGScheduler: Job 1 finished: load at StockTrade.java:14, took 0.218586 s
+root
+ |-- symbol: string (nullable = true)
+ |-- series: string (nullable = true)
+ |-- open: double (nullable = true)
+ |-- high: double (nullable = true)
+ |-- low: double (nullable = true)
+ |-- close: double (nullable = true)
+ |-- last: double (nullable = true)
+ |-- prevClose: double (nullable = true)
+ |-- totTrdQty: integer (nullable = true)
+ |-- totTrdVal: double (nullable = true)
+ |-- timestamp: string (nullable = true)
+ |-- totalTrades: integer (nullable = true)
+ |-- isin: string (nullable = true)
+
+root
+ |-- timestamp: string (nullable = true)
+ |-- max(totTrdVal): double (nullable = true)
+
+19/09/25 13:04:34 INFO DAGScheduler: Job 6 finished: show at StockTrade.java:19, took 0.297356 s
++-----------+----------------+
+|  timestamp|  max(totTrdVal)|
++-----------+----------------+
+|07-JAN-2019| 7.71776961175E9|
+|09-JAN-2019|1.22997380748E10|
+|08-JAN-2019|  8.0807185982E9|
++-----------+----------------+
+
+
+
+----------==----------
