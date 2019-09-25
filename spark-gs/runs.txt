@@ -1,5 +1,7 @@
 StockTrade RUN 1
 
+./bin/spark-submit --class poc.spark.csv.StockTrade --master local[1] /opt/ngs/ashishb/apps/spark-gs/spark-gs-0.0.1-SNAPSHOT.jar
+
 19/09/25 13:04:32 INFO DAGScheduler: Job 1 finished: load at StockTrade.java:14, took 0.218586 s
 root
  |-- symbol: string (nullable = true)
@@ -29,6 +31,38 @@ root
 |08-JAN-2019|  8.0807185982E9|
 +-----------+----------------+
 
+----------=----------
+
+StockTrade RUN 2
+
+./bin/spark-submit --class poc.spark.csv.StockTrade --master local[1] /opt/ngs/ashishb/apps/spark-gs/spark-gs-0.0.1-SNAPSHOT.jar
+
+19/09/25 13:32:33 INFO DAGScheduler: Job 1 finished: load at StockTrade.java:16, took 0.206907 s
+root
+ |-- symbol: string (nullable = true)
+ |-- series: string (nullable = true)
+ |-- open: double (nullable = true)
+ |-- high: double (nullable = true)
+ |-- low: double (nullable = true)
+ |-- close: double (nullable = true)
+ |-- last: double (nullable = true)
+ |-- prevClose: double (nullable = true)
+ |-- totTrdQty: integer (nullable = true)
+ |-- totTrdVal: double (nullable = true)
+ |-- timestamp: string (nullable = true)
+ |-- totalTrades: integer (nullable = true)
+ |-- isin: string (nullable = true)
+
+root
+ |-- timestamp: string (nullable = true)
+ |-- max(totTrdVal): double (nullable = true)
 
 
-----------==----------
+19/09/25 13:32:35 INFO DAGScheduler: Job 6 finished: show at StockTrade.java:24, took 0.283763 s
++-----------+----------------+
+|  timestamp|  max(totTrdVal)|
++-----------+----------------+
+|07-JAN-2019| 7.71776961175E9|
+|09-JAN-2019|1.22997380748E10|
+|08-JAN-2019|  8.0807185982E9|
++-----------+----------------+

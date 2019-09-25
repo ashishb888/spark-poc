@@ -4,9 +4,27 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
+@SuppressWarnings("unused")
 public class StockTrade {
 
-	private static void start() {
+	private static SparkSession spark;
+
+	private static void sql() {
+		System.out.println("sql service");
+
+		Dataset<Row> df = spark.read().format("csv").option("header", true).option("inferSchema", true)
+				.load("/var/tmp/files");
+		df.printSchema();
+
+		df.createOrReplaceTempView("df_tbl");
+
+		Dataset<Row> result = spark.sql("select timestamp, max(totTrdVal) from df_tbl group by timestamp");
+
+		result.printSchema();
+		result.show();
+	}
+
+	private static void tranformation() {
 		System.out.println("start service");
 
 		SparkSession spark = SparkSession.builder().appName(StockTrade.class.getName()).getOrCreate();
@@ -20,7 +38,10 @@ public class StockTrade {
 	}
 
 	public static void main(String[] args) {
-		start();
+		spark = SparkSession.builder().appName(StockTrade.class.getName()).getOrCreate();
+
+		// tranformation();
+		sql();
 	}
 
 }
