@@ -1,4 +1,4 @@
-package poc.spark.main
+package poc.spark.main.csv
 
 import org.apache.spark.sql.SparkSession
 
