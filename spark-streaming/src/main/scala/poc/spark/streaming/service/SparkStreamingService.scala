@@ -39,18 +39,5 @@ object SparkStreamingService {
       .start()
 
     write.awaitTermination()
-    //    val wordCounts = lines
-    //      .flatMap(_.split(" "))
-    //      .groupBy("value")
-    //      .count();
-    //
-    //    val query = wordCounts
-    //      .writeStream
-    //      .format("console")
-    //      .outputMode("complete")
-    //      .option("checkpointLocation", "/var/tmp/cp-" + UUID.randomUUID.toString)
-    //      .start()
-    //
-    //    query.awaitTermination()
   }
 }
