@@ -7,3 +7,10 @@ Lines with a: 1, Lines with b: 1
 19/09/30 15:59:32 INFO SparkUI: Stopped Spark web UI at http://hdpdev6:4040
 
 ----------=----------
+
+./bin/spark-submit --class poc.spark.sql.SparkSqlApp /opt/ngs/ashishb/apps/spark/spark-sql/spark-sql-1.0-SNAPSHOT.jar README.md
+
+19/09/30 16:13:00 INFO DAGScheduler: Job 1 finished: count at SparkSqlService.scala:14, took 0.045969 s
+Lines with a: 62, Lines with b: 31
+19/09/30 16:13:00 INFO SparkUI: Stopped Spark web UI at http://hdpdev6:4040
+
