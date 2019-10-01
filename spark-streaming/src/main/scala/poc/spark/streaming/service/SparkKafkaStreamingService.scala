@@ -5,15 +5,14 @@ import java.util.UUID
 import org.apache.spark.sql.SparkSession
 
 
-object SparkStreamingService {
+object SparkKafkaStreamingService {
 
   def start(topic: String, brokers: String): Unit = {
-    // streamingTest(topic)
-    SparkKafkaStreamingService.start(topic, brokers);
+    inOutKafka(topic, brokers)
   }
 
-  def streamingTest(topic: String): Unit = {
-    println("streamingTest service")
+  def inOutKafka(topic: String, brokers: String): Unit = {
+    println("inOutKafka service")
 
     val spark = SparkSession.builder.appName("Spark Streaming App").getOrCreate()
 
@@ -25,17 +24,17 @@ object SparkStreamingService {
       .option("kafka.bootstrap.servers", "localhost:7092")
       .option("subscribe", topic)
       .load()
+
     lines.selectExpr("CAST(value AS STRING)")
       .as[String]
-
     lines.isStreaming
-    lines.printSchema()
+    lines.printSchema
 
     val write = lines
       .writeStream
       .format("kafka")
-      .option("kafka.bootstrap.servers", "localhost:7092")
-      .option("topic", topic + "out")
+      .option("kafka.bootstrap.servers", brokers)
+      .option("topic", topic + "-out")
       .option("checkpointLocation", "/var/tmp/cp-" + UUID.randomUUID.toString)
       .start()
 
