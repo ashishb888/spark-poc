@@ -1177,4 +1177,82 @@ root
 19/10/01 13:34:34 INFO ShutdownHookManager: Deleting directory /tmp/spark-93358275-440c-419c-84a1-b519afe29ccd
 
 
+----------=----------
+SparkKafkaStreamingService readJson: RUN 1
 
+mvn package assembly:single
+
+./bin/spark-submit  /opt/ngs/ashishb/apps/spark/spark-streaming/spark-streaming-1.0-SNAPSHOT-jar-with-dependencies.jar sk3 localhost:7092
+
+19/10/01 17:41:42 INFO WriteToDataSourceV2Exec: Data source writer org.apache.spark.sql.execution.streaming.sources.MicroBatchWriter@41c028d is committing.
+-------------------------------------------
+Batch: 1
+-------------------------------------------
++------+------+
+|SERIES| count|
++------+------+
+|    YH|   363|
+|    NS|   363|
+|    YN|   242|
+|    NL|   726|
+|    NK|   605|
+|    DR|   363|
+|    NJ|   847|
+|    NX|   484|
+|    SM| 32428|
+|    P2|   726|
+|    NW|   242|
+|    YJ|   363|
+|    NA|  1452|
+|    EQ|551760|
+|    YA|   121|
+|    NP|   968|
+|    N3|  2541|
+|    YB|   121|
+|    NH|  1089|
+|    IV|   726|
++------+------+
+only showing top 20 rows
+
+Started and then pushed
+
+-------------------------------------------
+Batch: 1
+-------------------------------------------
+19/10/01 19:07:02 INFO CodeGenerator: Code generated in 6.728124 ms
++-----------+-----+
+|  TIMESTAMP|count|
++-----------+-----+
+|07-JAN-2019| 1928|
+|09-JAN-2019| 1913|
+|08-JAN-2019| 1892|
++-----------+-----+
+
+Pushed and then started
+19/10/01 19:08:53 INFO WriteToDataSourceV2Exec: Data source writer org.apache.spark.sql.execution.streaming.sources.MicroBatchWriter@6ddb8ee9 is committing.
+-------------------------------------------
+Batch: 0
+-------------------------------------------
+19/10/01 19:08:53 INFO CodeGenerator: Code generated in 7.267717 ms
+19/10/01 19:08:53 INFO CodeGenerator: Code generated in 5.034024 ms
++-----------+-----+
+|  TIMESTAMP|count|
++-----------+-----+
+|07-JAN-2019| 1928|
+|09-JAN-2019| 1913|
+|08-JAN-2019| 1892|
++-----------+-----+
+
+
+-------------------------------------------
+Batch: 0
+-------------------------------------------
+19/10/01 19:34:29 INFO CodeGenerator: Code generated in 6.41116 ms
+19/10/01 19:34:29 INFO CodeGenerator: Code generated in 5.067901 ms
++-----------+----------------+
+|  TIMESTAMP|   MAX TOTTRDVAL|
++-----------+----------------+
+|07-JAN-2019| 7.71776961175E9|
+|09-JAN-2019|1.22997380748E10|
+|08-JAN-2019|  8.0807185982E9|
++-----------+----------------+
