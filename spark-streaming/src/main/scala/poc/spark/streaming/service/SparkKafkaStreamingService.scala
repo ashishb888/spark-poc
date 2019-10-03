@@ -41,14 +41,14 @@ object SparkKafkaStreamingService {
       //.count()
       .agg(max("TOTTRDVAL").alias("MAX TOTTRDVAL"))
 
-    import org.apache.spark.sql.streaming.ProcessingTime
+    import org.apache.spark.sql.streaming.Trigger
 
     //    val seriesQuery =
     //      groupBySeries
     //        .writeStream
     //        .format("console")
     //        .outputMode("complete")
-    //        .trigger(ProcessingTime("20 seconds"))
+    //        .trigger(Trigger.ProcessingTime("20 seconds"))
     //        .start()
     //
     //    seriesQuery.awaitTermination()
@@ -58,7 +58,7 @@ object SparkKafkaStreamingService {
         .writeStream
         .format("console")
         .outputMode("complete")
-        .trigger(ProcessingTime("20 seconds"))
+        .trigger(Trigger.ProcessingTime("20 seconds"))
         .start()
 
     timestampQuery.awaitTermination()
