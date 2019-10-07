@@ -8,7 +8,50 @@ object SparkKafkaStreamingService {
 
   def start(topic: String, brokers: String): Unit = {
     // inOutKafka(topic, brokers)
-    readJson(topic, brokers)
+    //readJson(topic, brokers)
+    inOutKafkaStream(topic, brokers)
+  }
+
+  def inOutKafkaStream(topic: String, brokers: String): Unit = {
+    println("inOutKafkaStream service")
+
+    val spark = SparkSession.builder.appName("Spark Streaming App").getOrCreate()
+
+    import spark.implicits._
+    import org.apache.spark.sql.functions.{get_json_object, json_tuple, max}
+
+    val inputStream = spark
+      .readStream
+      .format("kafka")
+      .option("kafka.bootstrap.servers", brokers)
+      .option("subscribe", topic)
+      .option("startingOffsets", "earliest")
+      // .option("minPartitions", "10")
+      .option("failOnDataLoss", "true")
+      .load()
+    inputStream.printSchema
+
+    val groupByTimestamp = inputStream
+      .select(get_json_object(($"value").cast("string"), "$.TIMESTAMP").alias("TIMESTAMP"), get_json_object(($"value").cast("string"), "$.TOTTRDVAL").cast("double").alias("TOTTRDVAL"))
+      .groupBy($"TIMESTAMP")
+      .agg(max("TOTTRDVAL").alias("TOTTRDVAL"))
+
+    import org.apache.spark.sql.streaming.Trigger
+
+    val timestampQuery =
+      groupByTimestamp
+        // .withWatermark("TIMESTAMP", "10 minutes")
+        .selectExpr("CAST (TOTTRDVAL as string) as value")
+        .writeStream
+        .format("kafka")
+        .outputMode("complete")
+        .option("kafka.bootstrap.servers", brokers)
+        .option("topic", topic + "-out")
+        .option("checkpointLocation", "/var/tmp/cp-" + UUID.randomUUID.toString)
+        .trigger(Trigger.ProcessingTime("20 seconds"))
+        .start()
+
+    timestampQuery.awaitTermination()
   }
 
   def readJson(topic: String, brokers: String): Unit = {

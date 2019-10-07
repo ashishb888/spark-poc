@@ -1256,3 +1256,15 @@ Batch: 0
 |09-JAN-2019|1.22997380748E10|
 |08-JAN-2019|  8.0807185982E9|
 +-----------+----------------+
+
+----------=----------
+SparkKafkaStreamingService inOutKafkaStream: RUN 1
+
+mvn package assembly:single
+
+./bin/spark-submit  /opt/ngs/ashishb/apps/spark/spark-streaming/spark-streaming-1.0-SNAPSHOT-jar-with-dependencies.jar ps1-tr1 localhost:7092
+
+./bin/kafka-console-consumer.sh --bootstrap-server localhost:7092  --topic ps1-tr1-out --from-beginning
+1.22997380748E10
+8.0807185982E9
+7.71776961175E9
